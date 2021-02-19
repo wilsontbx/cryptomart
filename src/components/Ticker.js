@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import Ticker, { FinancialTicker, NewsTicker } from "nice-react-ticker";
+import Ticker, { FinancialTicker } from "nice-react-ticker";
 import backendAPI from "../backendAPI/BackendAPI";
 
-export default function Header() {
+export default function TickerHeader() {
   const [headline, setHeadline] = useState(null);
 
   const getData = () => {
@@ -11,7 +11,6 @@ export default function Header() {
       .then((res) => {
         if (res.data.success) {
           setHeadline(res.data.allResult.data);
-          console.log(headline);
         }
       })
       .catch((err) => {

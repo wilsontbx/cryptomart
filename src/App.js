@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MainPage from "./components/MainPage";
-import Header from "./components/Header";
+import TickerHeader from "./components/Ticker";
 
 function App() {
   return (
     <Router>
-      <Header />
+      <TickerHeader />
       <Switch>
         <Route to="/">
           <MainPage />

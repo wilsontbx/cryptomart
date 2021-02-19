@@ -13,13 +13,13 @@ import TableSortLabel from "@material-ui/core/TableSortLabel";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Paper from "@material-ui/core/Paper";
-import Checkbox from "@material-ui/core/Checkbox";
-import IconButton from "@material-ui/core/IconButton";
-import Tooltip from "@material-ui/core/Tooltip";
+// import Checkbox from "@material-ui/core/Checkbox";
+// import IconButton from "@material-ui/core/IconButton";
+// import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
-import DeleteIcon from "@material-ui/icons/Delete";
-import FilterListIcon from "@material-ui/icons/FilterList";
+// import DeleteIcon from "@material-ui/icons/Delete";
+// import FilterListIcon from "@material-ui/icons/FilterList";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -50,7 +50,7 @@ function stableSort(array, comparator) {
 const headCells = [
   { id: "cmc_rank", numeric: false, disablePadding: true, label: "#" },
   { id: "name", numeric: false, disablePadding: false, label: "Name" },
-  { id: "price", numeric: true, disablePadding: false, label: "Price" },
+  { id: "price", numeric: true, disablePadding: false, label: "Price (USD)" },
   {
     id: "percent_change_24h",
     numeric: true,
@@ -81,11 +81,11 @@ const headCells = [
 function EnhancedTableHead(props) {
   const {
     classes,
-    onSelectAllClick,
+    // onSelectAllClick,
     order,
     orderBy,
-    numSelected,
-    rowCount,
+    // numSelected,
+    // rowCount,
     onRequestSort,
   } = props;
   const createSortHandler = (property) => (event) => {
@@ -95,14 +95,14 @@ function EnhancedTableHead(props) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        {/* <TableCell padding="checkbox">
           <Checkbox
             indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
             inputProps={{ "aria-label": "select all desserts" }}
           />
-        </TableCell>
+        </TableCell> */}
         {headCells.map((headCell) => (
           <TableCell
             key={headCell.id}
@@ -156,6 +156,7 @@ const useToolbarStyles = makeStyles((theme) => ({
         },
   title: {
     flex: "1 1 100%",
+    fontWeight: "bold",
   },
 }));
 
@@ -181,15 +182,16 @@ const EnhancedTableToolbar = (props) => {
       ) : (
         <Typography
           className={classes.title}
-          variant="h6"
+          variant="h5"
           id="tableTitle"
           component="div"
+          display="block"
         >
           Top 100 Cryptocurrency
         </Typography>
       )}
 
-      {numSelected > 0 ? (
+      {/* {numSelected > 0 ? (
         <Tooltip title="Delete">
           <IconButton aria-label="delete">
             <DeleteIcon />
@@ -201,7 +203,7 @@ const EnhancedTableToolbar = (props) => {
             <FilterListIcon />
           </IconButton>
         </Tooltip>
-      )}
+      )} */}
     </Toolbar>
   );
 };
@@ -232,9 +234,30 @@ const useStyles = makeStyles((theme) => ({
     top: 20,
     width: 1,
   },
+  main: { display: "flex" },
   logo: {
     height: "24px",
     width: "24px",
+    marginRight: 10,
+    display: "table-cell",
+  },
+  title: {
+    fontWeight: "bold",
+    marginRight: 5,
+  },
+  price: {
+    fontWeight: "bold",
+  },
+  symbol: {
+    color: "grey",
+  },
+  positive: {
+    fontWeight: "bold",
+    color: "#71C587",
+  },
+  negative: {
+    fontWeight: "bold",
+    color: "#C93C45",
   },
 }));
 
@@ -247,7 +270,20 @@ export default function CryptoTable(props) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
   const { data } = props;
-  console.log(data);
+  const dataTable = [];
+  data?.forEach((element) => {
+    dataTable.push({
+      name: element.name,
+      cmc_rank: element.cmc_rank,
+      symbol: element.symbol,
+      price: element.quote.USD.price,
+      percent_change_24h: element.quote.USD.percent_change_24h,
+      percent_change_7d: element.quote.USD.percent_change_7d,
+      market_cap: element.quote.USD.market_cap,
+      volume_24h: element.quote.USD.volume_24h,
+      circulating_supply: element.circulating_supply,
+    });
+  });
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
@@ -263,25 +299,25 @@ export default function CryptoTable(props) {
     setSelected([]);
   };
 
-  const handleClick = (event, name) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected = [];
+  // const handleClick = (event, name) => {
+  //   const selectedIndex = selected.indexOf(name);
+  //   let newSelected = [];
 
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
+  //   if (selectedIndex === -1) {
+  //     newSelected = newSelected.concat(selected, name);
+  //   } else if (selectedIndex === 0) {
+  //     newSelected = newSelected.concat(selected.slice(1));
+  //   } else if (selectedIndex === selected.length - 1) {
+  //     newSelected = newSelected.concat(selected.slice(0, -1));
+  //   } else if (selectedIndex > 0) {
+  //     newSelected = newSelected.concat(
+  //       selected.slice(0, selectedIndex),
+  //       selected.slice(selectedIndex + 1)
+  //     );
+  //   }
 
-    setSelected(newSelected);
-  };
+  //   setSelected(newSelected);
+  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -297,6 +333,14 @@ export default function CryptoTable(props) {
   };
 
   const isSelected = (name) => selected.indexOf(name) !== -1;
+
+  const styleIncDec = (number) => {
+    if (number > 0) {
+      return classes.positive;
+    } else {
+      return classes.negative;
+    }
+  };
 
   return (
     <div className={classes.root}>
@@ -316,10 +360,10 @@ export default function CryptoTable(props) {
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
               onRequestSort={handleRequestSort}
-              rowCount={data.length}
+              rowCount={dataTable.length}
             />
             <TableBody>
-              {stableSort(data, getComparator(order, orderBy))
+              {stableSort(dataTable, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row, index) => {
                   const isItemSelected = isSelected(row.cmc_rank);
@@ -328,50 +372,67 @@ export default function CryptoTable(props) {
                   return (
                     <TableRow
                       hover
-                      onClick={(event) => handleClick(event, row.cmc_rank)}
+                      // onClick={(event) => handleClick(event, row.cmc_rank)}
                       role="checkbox"
                       aria-checked={isItemSelected}
                       tabIndex={-1}
                       key={row.cmc_rank}
                       selected={isItemSelected}
                     >
-                      <TableCell padding="checkbox">
+                      {/* <TableCell padding="checkbox">
                         <Checkbox
                           checked={isItemSelected}
                           inputProps={{ "aria-labelledby": labelId }}
                         />
-                      </TableCell>
+                      </TableCell> */}
                       <TableCell
                         component="th"
                         id={labelId}
                         scope="row"
                         padding="none"
                       >
-                        {row.cmc_rank}
+                        <Typography>{row.cmc_rank}</Typography>
                       </TableCell>
                       <TableCell align="left">
-                        <img
-                          className={classes.logo}
-                          src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${row.cmc_rank}.png`}
-                          alt={row.cmc_rank}
-                        />
-                        {row.name} ({row.symbol})
-                      </TableCell>
-                      <TableCell align="right">{row.quote.USD.price}</TableCell>
-                      <TableCell align="right">
-                        {row.quote.USD.percent_change_24h}
-                      </TableCell>
-                      <TableCell align="right">
-                        {row.quote.USD.percent_change_7d}
+                        <Typography className={classes.main}>
+                          <img
+                            className={classes.logo}
+                            src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${row.cmc_rank}.png`}
+                            alt={row.cmc_rank}
+                          />
+                          <span className={classes.title}>{row.name} </span>
+                          <span className={classes.symbol}>{row.symbol}</span>
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">
-                        {row.quote.USD.market_cap}
+                        <Typography className={classes.price}>
+                          ${row.price.toFixed(2)}
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">
-                        {row.quote.USD.volume_24h}
+                        <Typography
+                          className={styleIncDec(row.percent_change_24h)}
+                        >
+                          {row.percent_change_24h.toFixed(2)}%
+                        </Typography>
                       </TableCell>
                       <TableCell align="right">
-                        {row.circulating_supply}
+                        <Typography
+                          className={styleIncDec(row.percent_change_7d)}
+                        >
+                          {row.percent_change_7d.toFixed(2)}%
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography>{row.market_cap.toFixed(2)}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography>{row.volume_24h.toFixed(2)}</Typography>
+                      </TableCell>
+                      <TableCell align="right">
+                        <Typography>
+                          {row.circulating_supply.toFixed(2)}
+                        </Typography>
                       </TableCell>
                     </TableRow>
                   );
