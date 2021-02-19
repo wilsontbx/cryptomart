@@ -1,10 +1,11 @@
 import axios from "axios";
 import qs from "qs";
 
-const baseUrl = "http://localhost:5000";
+const devurl = "http://localhost:5000";
+const produrl = "https://express-cryptomart.netlify.app/";
 
 const axiosInstance = axios.create({
-  baseURL: baseUrl,
+  baseURL: process.env.NODE_ENV === "development" ? devurl : produrl,
   timeout: 5000,
 });
 
