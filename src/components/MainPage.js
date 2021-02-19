@@ -11,7 +11,6 @@ function MainPage() {
       .then((res) => {
         if (res.data.success) {
           setData(res.data.allResult.data);
-          console.log(data);
         }
       })
       .catch((err) => {

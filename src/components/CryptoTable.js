@@ -270,6 +270,7 @@ export default function CryptoTable(props) {
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
   const { data } = props;
+  console.log(data);
   const dataTable = [];
   data?.forEach((element) => {
     dataTable.push({
