@@ -11,14 +11,14 @@ function MainPage() {
       .then((res) => {
         if (res.data.success) {
           setData(res.data.allResult.data);
-        } else {
-          return;
+          console.log(data);
         }
       })
       .catch((err) => {
         console.log(err);
       });
   };
+
   useEffect(() => {
     getData();
   }, []);

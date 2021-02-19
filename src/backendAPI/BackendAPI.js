@@ -1,7 +1,7 @@
 import axios from "axios";
-// import qs from "qs";
+import qs from "qs";
 
-const baseUrl = "http://localhost:5000/";
+const baseUrl = "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -9,8 +9,13 @@ const axiosInstance = axios.create({
 });
 
 const backendAPI = {
-  render: () => {
-    return axiosInstance.get("render");
+  render: (limit = "100") => {
+    return axiosInstance.post(
+      "/render",
+      qs.stringify({
+        limit: limit,
+      })
+    );
   },
 };
 

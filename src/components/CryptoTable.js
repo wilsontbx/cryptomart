@@ -48,20 +48,30 @@ function stableSort(array, comparator) {
 }
 
 const headCells = [
-  { id: "no", numeric: false, disablePadding: true, label: "#" },
+  { id: "cmc_rank", numeric: false, disablePadding: true, label: "#" },
   { id: "name", numeric: false, disablePadding: false, label: "Name" },
   { id: "price", numeric: true, disablePadding: false, label: "Price" },
-  { id: "24h", numeric: true, disablePadding: false, label: "24h" },
-  { id: "7d", numeric: true, disablePadding: false, label: "7d" },
   {
-    id: "marketcap",
+    id: "percent_change_24h",
+    numeric: true,
+    disablePadding: false,
+    label: "24h",
+  },
+  {
+    id: "percent_change_7d",
+    numeric: true,
+    disablePadding: false,
+    label: "7d",
+  },
+  {
+    id: "market_cap",
     numeric: true,
     disablePadding: false,
     label: "Market Cap",
   },
-  { id: "volume", numeric: true, disablePadding: false, label: "Volume" },
+  { id: "volume_24h", numeric: true, disablePadding: false, label: "Volume" },
   {
-    id: "circulatingsupply",
+    id: "circulating_supply",
     numeric: true,
     disablePadding: false,
     label: "Circulating Supply",
@@ -225,14 +235,13 @@ const useStyles = makeStyles((theme) => ({
   logo: {
     height: "24px",
     width: "24px",
-    borderRadius: "12px",
   },
 }));
 
 export default function CryptoTable(props) {
   const classes = useStyles();
   const [order, setOrder] = React.useState("asc");
-  const [orderBy, setOrderBy] = React.useState("calories");
+  const [orderBy, setOrderBy] = React.useState("");
   const [selected, setSelected] = React.useState([]);
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
@@ -346,7 +355,7 @@ export default function CryptoTable(props) {
                           src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${row.cmc_rank}.png`}
                           alt={row.cmc_rank}
                         />
-                        {row.name}
+                        {row.name} ({row.symbol})
                       </TableCell>
                       <TableCell align="right">{row.quote.USD.price}</TableCell>
                       <TableCell align="right">
