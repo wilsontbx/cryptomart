@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import clsx from "clsx";
+// import clsx from "clsx";
 import { lighten, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -21,6 +21,8 @@ import Switch from "@material-ui/core/Switch";
 import { Link } from "@material-ui/core";
 // import DeleteIcon from "@material-ui/icons/Delete";
 // import FilterListIcon from "@material-ui/icons/FilterList";
+import moment from "moment";
+import CircularProgressWithLabel from "./Progress";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -163,15 +165,15 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { numSelected } = props;
+  const { status, progress } = props;
 
   return (
     <Toolbar
-      className={clsx(classes.root, {
-        [classes.highlight]: numSelected > 0,
-      })}
+    // className={clsx(classes.root, {
+    //   [classes.highlight]: numSelected > 0,
+    // })}
     >
-      {numSelected > 0 ? (
+      {/* {numSelected > 0 ? (
         <Typography
           className={classes.title}
           color="inherit"
@@ -180,17 +182,23 @@ const EnhancedTableToolbar = (props) => {
         >
           {numSelected} selected
         </Typography>
-      ) : (
-        <Typography
-          className={classes.title}
-          variant="h5"
-          id="tableTitle"
-          component="div"
-          display="block"
-        >
-          Top 100 Cryptocurrency
-        </Typography>
-      )}
+      ) : ( */}
+      <Typography
+        className={classes.title}
+        variant="h5"
+        id="tableTitle"
+        component="div"
+        display="block"
+      >
+        Top 100 Cryptocurrency
+      </Typography>
+      {/* )} */}
+      <CircularProgressWithLabel value={progress} />
+      <p className={classes.rootTitleDate}>
+        {status &&
+          "Last updated " +
+            moment(status.timestamp).format("DD MMM YYYY, h:mm A")}
+      </p>
 
       {/* {numSelected > 0 ? (
         <Tooltip title="Delete">
@@ -260,6 +268,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     color: "#C93C45",
   },
+  rootTitleDate: {
+    marginTop: 0,
+    marginBottom: 0,
+    fontSize: "0.8rem",
+    color: "grey",
+    // fontWeight: "bold",
+    fontWeight: 400,
+  },
 }));
 
 export default function CryptoTable(props) {
@@ -270,7 +286,7 @@ export default function CryptoTable(props) {
   const [page, setPage] = React.useState(0);
   const [dense, setDense] = React.useState(false);
   const [rowsPerPage, setRowsPerPage] = React.useState(25);
-  const { data } = props;
+  const { data, status, progress } = props;
   console.log(data);
   const dataTable = [];
   data?.forEach((element) => {
@@ -347,7 +363,11 @@ export default function CryptoTable(props) {
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <EnhancedTableToolbar
+          numSelected={selected.length}
+          status={status}
+          progress={progress}
+        />
         <TableContainer>
           <Table
             className={classes.table}

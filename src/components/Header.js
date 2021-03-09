@@ -4,6 +4,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Container } from "@material-ui/core";
 import backendAPI from "../backendAPI/BackendAPI";
+import TickerHeader from "./Ticker";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -29,10 +30,8 @@ function Header() {
       .render()
       .then((res) => {
         if (res.data.success) {
-          localStorage.setItem(
-            "price",
-            JSON.stringify(res.data.allResult.data)
-          );
+          console.log(res.data);
+          localStorage.setItem("price", JSON.stringify(res.data.allResult));
         }
         console.log("call");
       })
@@ -42,7 +41,10 @@ function Header() {
   };
 
   useEffect(() => {
-    // getData();
+    if (!JSON.parse(localStorage.getItem("price"))) {
+      console.log("once");
+      getData();
+    }
     const timer = setInterval(() => {
       getData();
     }, 60000);
@@ -52,6 +54,7 @@ function Header() {
   }, []);
   return (
     <React.Fragment>
+      <TickerHeader />
       <Toolbar className={classes.toolbar}>
         <Container>
           <Typography

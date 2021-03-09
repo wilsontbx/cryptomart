@@ -6,16 +6,16 @@ function CryptoInfo(props) {
   const symbol = props.match.params.symbol;
 
   const getData = () => {
-    backendAPI
-      .coinInfo(symbol)
-      .then((res) => {
-        if (res.data.success) {
-          setData(res.data.allResult.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // backendAPI
+    //   .coinInfo(symbol)
+    //   .then((res) => {
+    //     if (res.data.success) {
+    //       setData(res.data.allResult.data);
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //   });
   };
 
   useEffect(() => {

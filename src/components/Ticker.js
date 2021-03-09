@@ -19,9 +19,11 @@ export default function TickerHeader() {
   // };
 
   useEffect(() => {
-    setHeadline(JSON.parse(localStorage.getItem("price")).splice(0, 10));
+    setHeadline(JSON.parse(localStorage.getItem("price"))?.data.splice(0, 10));
     const timer = setInterval(() => {
-      setHeadline(JSON.parse(localStorage.getItem("price")).splice(0, 10));
+      setHeadline(
+        JSON.parse(localStorage.getItem("price"))?.data.splice(0, 10)
+      );
     }, 60000);
     return () => {
       clearInterval(timer);
