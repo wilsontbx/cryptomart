@@ -5,21 +5,31 @@ import CryptoTable from "./CryptoTable";
 
 function MainPage() {
   const [data, setData] = useState(null);
-  const getData = () => {
-    backendAPI
-      .render()
-      .then((res) => {
-        if (res.data.success) {
-          setData(res.data.allResult.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const getData = () => {
+  //   backendAPI
+  //     .render()
+  //     .then((res) => {
+  //       if (res.data.success) {
+  //         localStorage.setItem(
+  //           "price",
+  //           JSON.stringify(res.data.allResult.data)
+  //         );
+  //         setData(res.data.allResult.data);
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   useEffect(() => {
-    getData();
+    setData(JSON.parse(localStorage.getItem("price")));
+    const timer = setInterval(() => {
+      setData(JSON.parse(localStorage.getItem("price")));
+    }, 60000);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
   return <Container>{data && <CryptoTable data={data} />}</Container>;
 }

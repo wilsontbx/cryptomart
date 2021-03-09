@@ -5,21 +5,27 @@ import backendAPI from "../backendAPI/BackendAPI";
 export default function TickerHeader() {
   const [headline, setHeadline] = useState(null);
 
-  const getData = () => {
-    backendAPI
-      .render("10")
-      .then((res) => {
-        if (res.data.success) {
-          setHeadline(res.data.allResult.data);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  // const getData = () => {
+  //   backendAPI
+  //     .render("10")
+  //     .then((res) => {
+  //       if (res.data.success) {
+
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   useEffect(() => {
-    getData();
+    setHeadline(JSON.parse(localStorage.getItem("price")).splice(0, 10));
+    const timer = setInterval(() => {
+      setHeadline(JSON.parse(localStorage.getItem("price")).splice(0, 10));
+    }, 60000);
+    return () => {
+      clearInterval(timer);
+    };
   }, []);
 
   return (

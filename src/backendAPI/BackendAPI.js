@@ -18,6 +18,14 @@ const backendAPI = {
       })
     );
   },
+  coinInfo: (symbol) => {
+    return axiosInstance.post(
+      "/search",
+      qs.stringify({
+        symbol: symbol,
+      })
+    );
+  },
 };
 
 export default backendAPI;

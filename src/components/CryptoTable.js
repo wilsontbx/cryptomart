@@ -18,6 +18,7 @@ import Paper from "@material-ui/core/Paper";
 // import Tooltip from "@material-ui/core/Tooltip";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Switch from "@material-ui/core/Switch";
+import { Link } from "@material-ui/core";
 // import DeleteIcon from "@material-ui/icons/Delete";
 // import FilterListIcon from "@material-ui/icons/FilterList";
 
@@ -400,8 +401,10 @@ export default function CryptoTable(props) {
                             className={classes.logo}
                             src={`https://s2.coinmarketcap.com/static/img/coins/64x64/${row.cmc_rank}.png`}
                             alt={row.cmc_rank}
-                          />
-                          <span className={classes.title}>{row.name} </span>
+                          />{" "}
+                          <Link href={`/coin/${row.cmc_rank}`}>
+                            <span className={classes.title}>{row.name} </span>
+                          </Link>
                           <span className={classes.symbol}>{row.symbol}</span>
                         </Typography>
                       </TableCell>

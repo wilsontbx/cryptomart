@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { Container } from "@material-ui/core";
+import backendAPI from "../backendAPI/BackendAPI";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -23,7 +24,32 @@ const useStyles = makeStyles((theme) => ({
 
 function Header() {
   const classes = useStyles();
+  const getData = () => {
+    backendAPI
+      .render()
+      .then((res) => {
+        if (res.data.success) {
+          localStorage.setItem(
+            "price",
+            JSON.stringify(res.data.allResult.data)
+          );
+        }
+        console.log("call");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
+  useEffect(() => {
+    // getData();
+    const timer = setInterval(() => {
+      getData();
+    }, 60000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, []);
   return (
     <React.Fragment>
       <Toolbar className={classes.toolbar}>

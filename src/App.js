@@ -10,12 +10,8 @@ function App() {
       <TickerHeader />
       <Header />
       <Switch>
-        <Route to="/">
-          <MainPage />
-        </Route>
-        <Route to="/coin/:id">
-          <CryptoInfo />
-        </Route>
+        <Route path="/coin/:symbol" component={CryptoInfo} />
+        <Route path="/coin" component={MainPage} />
       </Switch>
     </Router>
   );
