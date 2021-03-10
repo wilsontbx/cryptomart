@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import backendAPI from "../backendAPI/BackendAPI";
 
 function CryptoInfo(props) {
   const [data, setData] = useState(null);

@@ -41,10 +41,9 @@ function Header() {
   };
 
   useEffect(() => {
-    if (!JSON.parse(localStorage.getItem("price"))) {
-      console.log("once");
-      getData();
-    }
+    // if (!JSON.parse(localStorage.getItem("price"))) {
+    getData();
+    // }
     const timer = setInterval(() => {
       getData();
     }, 60000);

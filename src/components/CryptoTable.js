@@ -21,7 +21,6 @@ import Switch from "@material-ui/core/Switch";
 import { Link } from "@material-ui/core";
 // import DeleteIcon from "@material-ui/icons/Delete";
 // import FilterListIcon from "@material-ui/icons/FilterList";
-import moment from "moment";
 import CircularProgressWithLabel from "./Progress";
 
 function descendingComparator(a, b, orderBy) {
@@ -165,7 +164,7 @@ const useToolbarStyles = makeStyles((theme) => ({
 
 const EnhancedTableToolbar = (props) => {
   const classes = useToolbarStyles();
-  const { status, progress } = props;
+  const { progress, status } = props;
 
   return (
     <Toolbar
@@ -193,12 +192,7 @@ const EnhancedTableToolbar = (props) => {
         Top 100 Cryptocurrency
       </Typography>
       {/* )} */}
-      <CircularProgressWithLabel value={progress} />
-      <p className={classes.rootTitleDate}>
-        {status &&
-          "Last updated " +
-            moment(status.timestamp).format("DD MMM YYYY, h:mm A")}
-      </p>
+      <CircularProgressWithLabel value={progress} status={status} />
 
       {/* {numSelected > 0 ? (
         <Tooltip title="Delete">

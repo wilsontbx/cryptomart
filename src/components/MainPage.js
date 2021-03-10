@@ -1,27 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Container } from "@material-ui/core";
-import backendAPI from "../backendAPI/BackendAPI";
 import CryptoTable from "./CryptoTable";
 
 function MainPage() {
   const [result, setResult] = useState(null);
   const [progress, setProgress] = useState(0);
-  // const getData = () => {
-  //   backendAPI
-  //     .render()
-  //     .then((res) => {
-  //       if (res.data.success) {
-  //         localStorage.setItem(
-  //           "price",
-  //           JSON.stringify(res.data.allResult.data)
-  //         );
-  //         setData(res.data.allResult.data);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   useEffect(() => {
     setResult(JSON.parse(localStorage.getItem("price")));

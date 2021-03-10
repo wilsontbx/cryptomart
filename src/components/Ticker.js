@@ -1,22 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Ticker, { FinancialTicker } from "nice-react-ticker";
-import backendAPI from "../backendAPI/BackendAPI";
 
 export default function TickerHeader() {
   const [headline, setHeadline] = useState(null);
-
-  // const getData = () => {
-  //   backendAPI
-  //     .render("10")
-  //     .then((res) => {
-  //       if (res.data.success) {
-
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // };
 
   useEffect(() => {
     setHeadline(JSON.parse(localStorage.getItem("price"))?.data.splice(0, 10));
