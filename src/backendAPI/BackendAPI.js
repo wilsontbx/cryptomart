@@ -10,13 +10,11 @@ const axiosInstance = axios.create({
 });
 
 const backendAPI = {
-  render: (limit = "100") => {
-    return axiosInstance.post(
-      "/render",
-      qs.stringify({
-        limit: limit,
-      })
-    );
+  getData: () => {
+    return axiosInstance.get("/coin/data");
+  },
+  getMeta: (symbol) => {
+    return axiosInstance.get(`/coin/meta/${symbol}`);
   },
 };
 
